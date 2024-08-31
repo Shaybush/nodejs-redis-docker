@@ -1,5 +1,5 @@
 const Redis = require('redis');
-const redisClient = Redis.createClient({ url: 'redis://redis:6379' }) // optional to pass { url: "" } inside (for production)
+const redisClient = Redis.createClient({ url: 'redis://redis:6379' }) // remove url if you are running on local
 redisClient.connect().catch(console.error);
 
 exports.getSetRedisCache = ({ key, callbackFn, expirationTime }) => {

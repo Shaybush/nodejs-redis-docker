@@ -1,27 +1,58 @@
-# Redis With Node JS
+# Node JS Redis Docker
 
-- Must download docker desktop if you are using mac or windows. (docker desktop is our deamon)
+<img src="https://skillicons.dev/icons?i=nodejs,redis,docker,javascript,vscode&perline=7" />
 
-1. run docker-compose:
+
+Must download [docker desktop](https://www.docker.com/products/docker-desktop) if you are using mac or windows. (docker desktop is our deamon)
+
+
+## Steps to run the project: 
+1. clone the project:
+   ```sh
+      git clone https://github.com/Shaybush/nodejs-redis-docker.git
+2. open the cloned folder:
+   ```sh
+      cd nodejs-redis-docker
+3. last step - run docker-compose:
    ```sh
    docker-compose up -d --build
    ```
-2. get into container:
+
+### send request to the router without the redis and with the redis -
+
+
+Copy URLs to postman as GET request - 
+1. router without the redis:
+   ```sh
+      http://localhost:3001/comments/v1
+   ```
+   
+2. router with the redis:
+   ```sh
+      http://localhost:3001/comments/v2
+      ```
+   
+
+Once you ran the container of redis you can use all the command of redis.
+
+get into the container of redis and run the cli - 
+
+1. get into container:
    ```sh
    docker exec -it redis /bin/bash
    ```
-3. get into container:
+2. get into container:
    ```sh
    redis-cli
    ```
 
-## basics commands
+## basics commands of redis
 
 - SET [KEY] "Hello, Redis!" --> set key
 - GET [KEY] --> get key
 - DEL [KEY] --> delete key
 - EXISTS [KEY] --> return 0/1
-- KEYS \* --> provide all the exisiting keys
+- KEYS * --> provide all the exisiting keys
 - flushall --> remove all the current keys
 - ttl [KEY] --> will present the time to live in seconds (-1 = without limit)
 - expire [KEY] [TIME] --> set an expired time for key

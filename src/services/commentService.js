@@ -2,6 +2,7 @@ const axios = require('axios');
 const { getSetRedisCache } = require('../utils/redis.util');
 
 const COMMENTS_API_URL = "https://jsonplaceholder.typicode.com/comments"
+const EXPIRATION_TIME = 60 * 60; // 1 hour (3600 seconds)
 
 async function getCommentsService(req, res, next) {
   const postId = req.query.postId;
@@ -16,21 +17,19 @@ async function getCommentsService(req, res, next) {
 async function getCommentsWithRedisService(req, res, next) {
   const postId = req.query.postId;
   const cacheKey = `comments?postId=${postId}`;
-  const expirationTime = 60 * 60; // Cache the data for 1 hour (3600 seconds)
 
   try {
-    // global function 
     const data = await getSetRedisCache({
       key: cacheKey,
       callbackFn: async () => {
         const { data } = await axios.get(COMMENTS_API_URL, { params: { postId } });
         return data;
       },
-      expirationTime,
+      expirationTime: EXPIRATION_TIME,
     })
     res.json({ data })
   } catch (error) {
-    res.json({ error })
+    next(new Error(error.message))
   }
 }
 
